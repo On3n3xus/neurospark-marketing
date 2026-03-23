@@ -7,19 +7,16 @@ export default function Error({
   reset: () => void;
 }) {
   return (
-    <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center px-6">
+    <div className="min-h-screen bg-background flex flex-col items-center justify-center px-6">
       <div className="text-center">
-        <div className="text-6xl mb-6 glow-magenta">⚠</div>
-        <h1 className="text-3xl font-bold tracking-tight mb-2">
+        <div className="text-5xl mb-6">⚠</div>
+        <h1 className="text-2xl font-semibold text-text-primary mb-2">
           Something went wrong
         </h1>
-        <p className="text-white/40 mb-8">
+        <p className="text-text-secondary mb-8">
           An unexpected error occurred. Please try again.
         </p>
-        <button
-          onClick={reset}
-          className="inline-block px-8 py-4 rounded-xl text-base font-medium text-black bg-[var(--neon-cyan)] hover:brightness-110 transition-all glow-box-cyan cursor-pointer"
-        >
+        <button onClick={reset} className="btn-pill px-8 py-3 cursor-pointer">
           Try Again
         </button>
       </div>

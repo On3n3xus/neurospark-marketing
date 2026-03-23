@@ -12,7 +12,8 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://neurospark.agency";
+const BASE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL || "https://neurospark.agency";
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
@@ -44,13 +45,9 @@ export const metadata: Metadata = {
     title: "Neurospark Marketing | Full-Service Creative Agency",
     description: "We build brands, websites, and campaigns that spark growth.",
   },
-  robots: {
-    index: true,
-    follow: true,
-  },
+  robots: { index: true, follow: true },
 };
 
-// JSON-LD structured data
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
@@ -68,8 +65,6 @@ const jsonLd = {
   ],
 };
 
-import CTAButton from "@/components/ui/CTAButton";
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -78,7 +73,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} dark`}
+      className={`${geistSans.variable} ${geistMono.variable}`}
     >
       <head>
         <script
@@ -86,10 +81,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="bg-black text-white font-sans antialiased overflow-x-hidden">
-        <div className="fixed top-6 right-6 z-50">
-          <CTAButton label="Get in Touch" variant="outline" className="backdrop-blur-md" />
-        </div>
+      <body className="bg-background text-text-primary font-sans antialiased">
         {children}
       </body>
     </html>

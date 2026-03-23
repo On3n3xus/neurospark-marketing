@@ -1,41 +1,24 @@
-"use client";
+import ContactForm from "@/components/ui/ContactForm";
 
-import { useRef } from "react";
-import { useFrame } from "@react-three/fiber";
-import * as THREE from "three";
-import NeonRing from "@/components/3d/NeonRing";
-import { SECTION_POSITIONS } from "@/lib/constants";
-
-interface ContactSectionProps {
-  scrollProgress: React.RefObject<number>;
-}
-
-// 3D background only — the form is rendered as a full-page HTML overlay in ContactOverlay
-export default function ContactSection({
-  scrollProgress,
-}: ContactSectionProps) {
-  const groupRef = useRef<THREE.Group>(null);
-
-  useFrame(() => {
-    const t = scrollProgress.current ?? 0;
-
-    if (groupRef.current) {
-      groupRef.current.visible = t > 0.78;
-      const target = t > 0.82 ? 1 : 0;
-      const scale = THREE.MathUtils.lerp(
-        groupRef.current.scale.x,
-        target,
-        0.03
-      );
-      groupRef.current.scale.setScalar(scale);
-    }
-  });
-
+export default function ContactSection() {
   return (
-    <group ref={groupRef} position={[0, 0, SECTION_POSITIONS.contact]}>
-      <NeonRing position={[0, 0, -3]} color="#00f0ff" radius={5} />
-      <NeonRing position={[2, 1, -5]} color="#ff00aa" radius={3} tube={0.015} />
-      <NeonRing position={[-3, -1, -2]} color="#8b5cf6" radius={4} tube={0.01} />
-    </group>
+    <section id="contact" className="py-24 md:py-32 px-6 bg-surface-alt">
+      <div className="max-w-2xl mx-auto">
+        <div className="text-center mb-12">
+          <p className="section-label mb-3">Contact</p>
+          <h2 className="text-3xl md:text-[44px] font-semibold tracking-[-0.02em] text-text-primary mb-4">
+            Let&apos;s Work Together
+          </h2>
+          <p className="text-base text-text-secondary">
+            Tell us about your project and we&apos;ll get back to you within 24
+            hours.
+          </p>
+        </div>
+
+        <div className="card p-8 md:p-10 shadow-sm">
+          <ContactForm />
+        </div>
+      </div>
+    </section>
   );
 }

@@ -11,7 +11,9 @@ export async function generateStaticParams() {
   return projects.map((project) => ({ slug: project.id }));
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const project = projects.find((p) => p.id === slug);
   if (!project) return {};
@@ -37,26 +39,23 @@ export default async function CaseStudyPage({ params }: PageProps) {
   const { details } = project;
 
   return (
-    <div className="min-h-screen bg-black text-white">
-      {/* Back link */}
-      <nav className="fixed top-0 left-0 right-0 z-40 px-6 py-4 bg-black/80 backdrop-blur-md border-b border-white/5">
+    <div className="min-h-screen bg-background text-text-primary">
+      {/* Back nav */}
+      <nav className="sticky top-0 z-40 px-6 py-4 bg-surface/80 backdrop-blur-xl border-b border-border">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           <Link
-            href="/"
-            className="text-sm text-white/50 hover:text-white transition-colors"
+            href="/#work"
+            className="text-sm text-text-secondary hover:text-accent transition-colors"
           >
-            ← Back to Home
+            ← Back
           </Link>
-          <span
-            className="text-xs font-mono uppercase tracking-widest"
-            style={{ color: project.color }}
-          >
+          <span className="font-mono text-xs uppercase tracking-widest text-accent">
             {project.category}
           </span>
         </div>
       </nav>
 
-      <main className="max-w-4xl mx-auto px-6 pt-28 pb-20">
+      <main className="max-w-4xl mx-auto px-6 pt-16 pb-20">
         {/* Hero */}
         <div className="mb-16">
           <div
@@ -69,17 +68,17 @@ export default async function CaseStudyPage({ params }: PageProps) {
           >
             Case Study
           </div>
-          <h1 className="text-5xl md:text-7xl font-bold tracking-[-0.04em] mb-4">
+          <h1 className="text-4xl md:text-6xl font-bold tracking-[-0.03em] mb-4 text-text-primary">
             {project.title}
           </h1>
-          <p className="text-lg md:text-xl text-white/50 max-w-2xl">
+          <p className="text-lg text-text-secondary max-w-2xl">
             {project.description}
           </p>
           <div className="flex flex-wrap gap-2 mt-6">
             {project.tags.map((tag) => (
               <span
                 key={tag}
-                className="text-xs px-3 py-1 rounded-full border border-white/10 text-white/40 font-mono"
+                className="text-[11px] px-3 py-1 rounded-full bg-surface-alt border border-border text-text-tertiary font-mono"
               >
                 {tag}
               </span>
@@ -87,57 +86,40 @@ export default async function CaseStudyPage({ params }: PageProps) {
           </div>
         </div>
 
-        {/* Neon divider */}
-        <div
-          className="h-px w-full mb-16"
-          style={{
-            background: `linear-gradient(90deg, transparent, ${project.color}, transparent)`,
-          }}
-        />
+        {/* Divider */}
+        <div className="h-px w-full bg-border mb-16" />
 
         {/* Challenge */}
         <section className="mb-16">
-          <h2
-            className="text-sm font-mono uppercase tracking-widest mb-4"
-            style={{ color: project.color }}
-          >
+          <h2 className="section-label mb-4" style={{ color: project.color }}>
             The Challenge
           </h2>
-          <p className="text-base md:text-lg leading-relaxed text-white/70">
+          <p className="text-base md:text-lg leading-relaxed text-text-secondary">
             {details.challenge}
           </p>
         </section>
 
         {/* Approach */}
         <section className="mb-16">
-          <h2
-            className="text-sm font-mono uppercase tracking-widest mb-4"
-            style={{ color: project.color }}
-          >
+          <h2 className="section-label mb-4" style={{ color: project.color }}>
             Our Approach
           </h2>
-          <p className="text-base md:text-lg leading-relaxed text-white/70">
+          <p className="text-base md:text-lg leading-relaxed text-text-secondary">
             {details.approach}
           </p>
         </section>
 
         {/* Results */}
         <section className="mb-16">
-          <h2
-            className="text-sm font-mono uppercase tracking-widest mb-6"
-            style={{ color: project.color }}
-          >
+          <h2 className="section-label mb-6" style={{ color: project.color }}>
             Results
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {details.results.map((result) => (
               <div
                 key={result.metric}
-                className="rounded-xl p-5 text-center"
-                style={{
-                  background: `${project.color}08`,
-                  border: `1px solid ${project.color}20`,
-                }}
+                className="card p-5 text-center"
+                style={{ borderColor: `${project.color}20` }}
               >
                 <p
                   className="text-2xl md:text-3xl font-bold font-mono tabular-nums"
@@ -145,7 +127,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
                 >
                   {result.value}
                 </p>
-                <p className="text-xs text-white/40 mt-2 uppercase tracking-wider">
+                <p className="text-xs text-text-tertiary mt-2 uppercase tracking-wider">
                   {result.metric}
                 </p>
               </div>
@@ -157,16 +139,13 @@ export default async function CaseStudyPage({ params }: PageProps) {
         {details.testimonial && (
           <section className="mb-16">
             <div
-              className="rounded-2xl p-8 md:p-10"
-              style={{
-                background: `${project.color}05`,
-                border: `1px solid ${project.color}15`,
-              }}
+              className="card p-8 md:p-10"
+              style={{ borderColor: `${project.color}20` }}
             >
-              <p className="text-lg md:text-xl leading-relaxed text-white/80 mb-6 italic">
+              <p className="text-lg md:text-xl leading-relaxed text-text-primary mb-6 italic">
                 &ldquo;{details.testimonial.quote}&rdquo;
               </p>
-              <p className="text-sm text-white/50">
+              <p className="text-sm text-text-secondary">
                 — {details.testimonial.name}, {details.testimonial.role}
               </p>
             </div>
@@ -175,16 +154,13 @@ export default async function CaseStudyPage({ params }: PageProps) {
 
         {/* CTA */}
         <section className="text-center py-12">
-          <h3 className="text-2xl md:text-3xl font-bold tracking-tight mb-4">
+          <h3 className="text-2xl md:text-3xl font-semibold tracking-tight mb-4 text-text-primary">
             Ready to start your project?
           </h3>
-          <p className="text-white/40 mb-8">
+          <p className="text-text-secondary mb-8">
             Let&apos;s create something extraordinary together.
           </p>
-          <Link
-            href="/"
-            className="inline-block px-8 py-4 rounded-xl text-lg font-semibold text-black bg-[var(--neon-cyan)] hover:brightness-110 transition-all glow-box-cyan"
-          >
+          <Link href="/#contact" className="btn-pill px-8 py-3.5">
             Get in Touch
           </Link>
         </section>

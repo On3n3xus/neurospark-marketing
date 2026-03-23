@@ -20,12 +20,10 @@ function isRateLimited(ip: string): boolean {
 }
 
 const contactSchema = z.object({
-  name: z.string().min(1, "Name is required").max(100),
+  name: z.string().min(2, "Name is required").max(100),
   email: z.string().email("Invalid email address"),
-  company: z.string().max(100).optional().default(""),
   projectType: z.string().max(50).optional().default(""),
-  budget: z.string().max(50).optional().default(""),
-  message: z.string().max(5000).optional().default(""),
+  message: z.string().min(10, "Message is required").max(5000),
 });
 
 export async function POST(request: Request) {
@@ -50,7 +48,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: firstError }, { status: 400 });
     }
 
-    const { name, email, company, projectType, budget, message } = result.data;
+    const { name, email, projectType, message } = result.data;
 
     // Send payload to n8n Automation Webhook
     try {
@@ -62,9 +60,7 @@ export async function POST(request: Request) {
         body: JSON.stringify({
           name,
           email,
-          company,
           projectType,
-          budget,
           message,
           source: "Website CTA",
           submitted_at: new Date().toISOString()

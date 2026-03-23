@@ -1,75 +1,41 @@
-"use client";
-
-import FloatingCard from "@/components/3d/FloatingCard";
 import { services } from "@/lib/services-data";
-import { SECTION_POSITIONS, HEX_COLORS } from "@/lib/constants";
 
-interface ServicesSectionProps {
-  scrollProgress: React.RefObject<number>;
-}
+const iconMap: Record<string, string> = {
+  diamond: "◆",
+  cube: "⬡",
+  play: "▶",
+  nodes: "◎",
+  target: "◉",
+  document: "▤",
+};
 
-const cardColors = [
-  HEX_COLORS.cyan,
-  HEX_COLORS.magenta,
-  HEX_COLORS.purple,
-  HEX_COLORS.green,
-  HEX_COLORS.blue,
-  HEX_COLORS.cyan,
-];
-
-// Arrange cards in a 3x2 grid centered on the section
-function getCardPosition(index: number): [number, number, number] {
-  const cols = 3;
-  const row = Math.floor(index / cols);
-  const col = index % cols;
-  const x = (col - (cols - 1) / 2) * 3.2;
-  const y = row === 0 ? 1.2 : -1.8;
-  const z = SECTION_POSITIONS.services + Math.abs(col - 1) * 0.5;
-  return [x, y, z];
-}
-
-export default function ServicesSection({
-  scrollProgress,
-}: ServicesSectionProps) {
+export default function ServicesSection() {
   return (
-    <group>
-      {services.map((service, i) => (
-        <FloatingCard
-          key={service.id}
-          position={getCardPosition(i)}
-          color={cardColors[i]}
-          width={2.6}
-          height={2.8}
-          scrollProgress={scrollProgress}
-          visibleRange={[0.12, 0.38]}
-        >
-          <div className="p-5 text-center">
-            <div
-              className="text-3xl mb-3"
-              style={{ filter: `drop-shadow(0 0 8px ${cardColors[i]})` }}
-            >
-              {service.icon === "diamond" && "◆"}
-              {service.icon === "cube" && "⬡"}
-              {service.icon === "play" && "▶"}
-              {service.icon === "nodes" && "◎"}
-              {service.icon === "target" && "◉"}
-              {service.icon === "document" && "▤"}
+    <section id="services" className="py-24 md:py-32 px-6">
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center mb-16">
+          <p className="section-label mb-3">What We Do</p>
+          <h2 className="text-3xl md:text-[44px] font-semibold tracking-[-0.02em] text-text-primary">
+            Services
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {services.map((service) => (
+            <div key={service.id} className="card p-8">
+              <div className="text-[32px] text-text-primary mb-4">
+                {iconMap[service.icon] || "●"}
+              </div>
+              <h3 className="text-lg font-semibold text-text-primary mb-2">
+                {service.title}
+              </h3>
+              <p className="text-sm text-text-secondary leading-relaxed">
+                {service.description}
+              </p>
             </div>
-            <h3
-              className="text-base font-medium tracking-tight text-white mb-2"
-              style={{ fontFamily: "var(--font-geist-sans)" }}
-            >
-              {service.title}
-            </h3>
-            <p
-              className="text-xs leading-relaxed text-white/50"
-              style={{ fontFamily: "var(--font-geist-sans)" }}
-            >
-              {service.description}
-            </p>
-          </div>
-        </FloatingCard>
-      ))}
-    </group>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
