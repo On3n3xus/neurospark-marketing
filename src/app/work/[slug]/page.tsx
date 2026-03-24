@@ -55,7 +55,24 @@ export default async function CaseStudyPage({ params }: PageProps) {
         </div>
       </nav>
 
-      <main className="max-w-4xl mx-auto px-6 pt-16 pb-20">
+      {/* Project hero gradient */}
+      <div
+        className="h-[240px] md:h-[320px] relative overflow-hidden"
+        style={{
+          background: `linear-gradient(135deg, ${project.color}15 0%, ${project.color}08 40%, #fafafa 100%)`,
+        }}
+      >
+        <div
+          className="absolute -right-16 -top-16 w-64 h-64 rounded-full opacity-15"
+          style={{ background: project.color }}
+        />
+        <div
+          className="absolute right-32 bottom-8 w-32 h-32 rounded-full opacity-8"
+          style={{ background: project.color }}
+        />
+      </div>
+
+      <main className="max-w-4xl mx-auto px-6 -mt-16 relative pb-20">
         {/* Hero */}
         <div className="mb-16">
           <div

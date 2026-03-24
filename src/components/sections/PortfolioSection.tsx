@@ -19,11 +19,27 @@ export default function PortfolioSection() {
               href={`/work/${project.id}`}
               className="card overflow-hidden group"
             >
-              {/* Color placeholder area */}
+              {/* Gradient hero area */}
               <div
-                className="h-[200px]"
-                style={{ background: `${project.color}10` }}
-              />
+                className="h-[200px] relative overflow-hidden"
+                style={{
+                  background: `linear-gradient(135deg, ${project.color}18 0%, ${project.color}08 40%, #f5f5f7 100%)`,
+                }}
+              >
+                {/* Abstract decorative shapes */}
+                <div
+                  className="absolute -right-8 -top-8 w-32 h-32 rounded-full opacity-20"
+                  style={{ background: project.color }}
+                />
+                <div
+                  className="absolute right-16 bottom-4 w-16 h-16 rounded-full opacity-10"
+                  style={{ background: project.color }}
+                />
+                <div
+                  className="absolute left-8 bottom-8 w-24 h-1 rounded-full opacity-15"
+                  style={{ background: project.color }}
+                />
+              </div>
               <div className="p-6">
                 <p className="font-mono text-xs uppercase tracking-widest text-accent mb-2">
                   {project.category}
