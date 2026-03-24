@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { services } from "@/lib/services-data";
 
 const iconMap: Record<string, string> = {
@@ -34,6 +35,12 @@ export default function ServicesSection() {
               </p>
             </div>
           ))}
+        </div>
+
+        <div className="mt-12 text-center">
+          <Link href="#contact" className="btn-pill px-8 py-3.5">
+            Discuss Your Project
+          </Link>
         </div>
       </div>
     </section>

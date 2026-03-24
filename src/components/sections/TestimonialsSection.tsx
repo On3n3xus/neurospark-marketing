@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { testimonials } from "@/lib/testimonials-data";
 
 export default function TestimonialsSection() {
@@ -42,6 +43,12 @@ export default function TestimonialsSection() {
               </div>
             </div>
           ))}
+        </div>
+
+        <div className="mt-12 text-center">
+          <Link href="#contact" className="btn-pill px-8 py-3.5">
+            Become Our Next Success Story
+          </Link>
         </div>
       </div>
     </section>

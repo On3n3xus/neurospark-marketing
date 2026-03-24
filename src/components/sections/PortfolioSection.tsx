@@ -64,6 +64,12 @@ export default function PortfolioSection() {
             </Link>
           ))}
         </div>
+
+        <div className="mt-12 text-center">
+          <Link href="#contact" className="btn-pill px-8 py-3.5">
+            Start a Project Like These
+          </Link>
+        </div>
       </div>
     </section>
   );

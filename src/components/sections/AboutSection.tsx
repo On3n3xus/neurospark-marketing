@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { team, stats } from "@/lib/team-data";
 
 export default function AboutSection() {
@@ -61,6 +62,12 @@ export default function AboutSection() {
               </p>
             </div>
           ))}
+        </div>
+
+        <div className="mt-12 text-center">
+          <Link href="#contact" className="btn-pill px-8 py-3.5">
+            Work With Our Team
+          </Link>
         </div>
       </div>
     </section>
