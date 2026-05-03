@@ -1,14 +1,48 @@
+import Link from "next/link";
 import Logo from "./Logo";
 
 const MONO = "var(--font-jetbrains-mono), ui-monospace, monospace";
 
-const COLS = [
-  { h: "OPERATIONS", items: ["Agents", "Content Engine", "Paid Media", "Brand Intel"] },
-  { h: "INDUSTRIES", items: ["Dental", "Med Spa", "Real Estate", "HVAC", "Plumbing", "Roofing"] },
-  { h: "COMPANY", items: ["About", "Work", "Team", "Press"] },
+type FooterItem = { label: string; href?: string };
+
+const COLS: { h: string; items: FooterItem[] }[] = [
+  {
+    h: "OPERATIONS",
+    items: [
+      { label: "Agents", href: "/services/ai-agents" },
+      { label: "Content Engine", href: "/services/content-engine" },
+      { label: "Paid Media", href: "/services/paid-media-ai" },
+      { label: "Brand Intel", href: "/services/brand-intel" },
+      { label: "Growth Automation", href: "/services/growth-automation" },
+      { label: "Revenue Forecast", href: "/services/revenue-forecast" },
+    ],
+  },
+  {
+    h: "INDUSTRIES",
+    items: [
+      { label: "Dental", href: "/industries/dental-marketing-minneapolis" },
+      { label: "Med Spa", href: "/industries/med-spa-marketing-minneapolis" },
+      { label: "Real Estate", href: "/industries/real-estate-marketing-minneapolis" },
+      { label: "HVAC", href: "/industries/hvac-marketing-minneapolis" },
+      { label: "Plumbing", href: "/industries/plumbing-marketing-minneapolis" },
+      { label: "Roofing", href: "/industries/roofing-marketing-minneapolis" },
+    ],
+  },
+  {
+    h: "COMPANY",
+    items: [
+      { label: "About", href: "/about" },
+      { label: "Work", href: "/work" },
+      { label: "Blog", href: "/blog" },
+      { label: "Contact", href: "/contact" },
+    ],
+  },
   {
     h: "CONTACT",
-    items: ["Danilo@neurosparkmarketing.com", "Minneapolis · Remote"],
+    items: [
+      { label: "Danilo@neurosparkmarketing.com", href: "mailto:Danilo@neurosparkmarketing.com" },
+      { label: "Minneapolis · Remote" },
+    ],
   },
 ];
 
@@ -70,14 +104,42 @@ export default function Footer() {
             >
               {c.items.map((it) => (
                 <li
-                  key={it}
+                  key={it.label}
                   style={{
                     fontFamily: MONO,
                     fontSize: 12,
                     color: "var(--ns-text-dim)",
                   }}
                 >
-                  {it}
+                  {it.href ? (
+                    it.href.startsWith("mailto:") ? (
+                      <a
+                        href={it.href}
+                        className="footer-link"
+                        style={{
+                          color: "var(--ns-text-dim)",
+                          textDecoration: "none",
+                          transition: "color .2s",
+                        }}
+                      >
+                        {it.label}
+                      </a>
+                    ) : (
+                      <Link
+                        href={it.href}
+                        className="footer-link"
+                        style={{
+                          color: "var(--ns-text-dim)",
+                          textDecoration: "none",
+                          transition: "color .2s",
+                        }}
+                      >
+                        {it.label}
+                      </Link>
+                    )
+                  ) : (
+                    <span>{it.label}</span>
+                  )}
                 </li>
               ))}
             </ul>
@@ -103,6 +165,9 @@ export default function Footer() {
         <span>BUILT BY HUMANS — RUN BY AGENTS</span>
         <span>v4.2.1</span>
       </div>
+      <style>{`
+        .footer-link:hover { color: var(--ns-violet) !important; }
+      `}</style>
     </footer>
   );
 }
