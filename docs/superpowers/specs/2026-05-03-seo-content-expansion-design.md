@@ -275,8 +275,13 @@ Update `src/app/sitemap.ts` to dynamically pull from `industries-data.ts` and `s
 - /blog refactor: existing two posts still render readably with new dark theme
 - Sub-nav `/INDUSTRIES` shows active state on all 6 industry pages
 
-## Open items requiring Danilo's input during implementation
+## Decisions resolved (no further input needed)
 
-- **Real proof statements** for the PROOF section of each industry pillar. The spec assumes anonymized client metrics will be supplied (e.g., "Twin Cities dental group, 3 locations: +218 new patients in Q1"). If no real client data exists for a vertical, the section becomes a generic "what to expect" framework instead.
-- **Pricing copy review** — service clusters reference flat retainer pricing; should match the existing 3-tier on /services.
-- **CTA targets** — pillar CTAs link to /contact for now (no Cal.com yet). Confirm this is acceptable for Wave 2 ship.
+- **PROOF section approach** — Industry pillars use **industry-benchmark projections** rather than specific client quotes. Format: ranges based on what Neurospark targets per vertical (e.g., "Our dental engagements target +180–220% new-patient inquiry volume within 90 days, sustained at +35–60% over baseline at month 12"). These are framed as Neurospark's deployment thesis, not as specific client testimonials. Real anonymized client quotes can be swapped in later via `industries-data.ts` without code changes — each industry record has a `proof.caseQuote` field that defaults to the benchmark statement.
+- **Pricing copy** — Cluster pages reference the existing three tiers verbatim (`STARTER $8K/mo · 2 modules`, `OPERATOR $22K/mo · 4 modules · recommended`, `COMMAND $48K/mo · all 6`). Each cluster page includes a one-line "Included in: Operator and Command tiers" (or similar) below the metric callout, plus an anchor link to `/services#pricing` for the full table. The tier names and prices live in a single source: `src/lib/services-data.ts` `TIERS` constant (extracted from `PricingGrid`).
+- **CTA target for Wave 2** — All pillar and cluster CTAs link to `/contact`. Cal.com integration is explicitly deferred to a separate work item. The CTA copy varies by page (vertical-specific on pillars, generic on clusters), but the destination is uniform.
+
+## Out-of-scope assumptions
+
+- **Real client data** for industries where benchmark projections are used can be added later by editing `industries-data.ts` — no code changes required. Out of scope for this spec.
+- **Cal.com booking** is intentionally deferred. When added later, it replaces the `/contact` href on pillar CTAs only.
