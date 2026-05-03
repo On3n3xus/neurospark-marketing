@@ -129,16 +129,63 @@ body {
   background: var(--ns-violet);
   color: white;
 }
+/* ============================================================
+   Global cyberpunk scrollbar — TERMINAL.OS aesthetic
+   Applies to the page scrollbar (html) and any nested scroll
+   container, including the agent terminal and overflow panels.
+   ============================================================ */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--ns-violet) rgba(15, 16, 24, 0.6);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(15, 16, 24, 0.6);
+  border-left: 1px solid var(--ns-line);
+}
+
+::-webkit-scrollbar-thumb {
+  background:
+    linear-gradient(180deg, var(--ns-violet-deep), var(--ns-violet)) padding-box,
+    linear-gradient(180deg, rgba(124, 92, 255, 0.4), rgba(34, 211, 238, 0.3)) border-box;
+  border: 1px solid transparent;
+  border-radius: 0;
+  box-shadow:
+    inset 0 0 0 1px rgba(124, 92, 255, 0.4),
+    0 0 6px rgba(124, 92, 255, 0.25);
+  background-clip: padding-box, border-box;
+  transition: box-shadow .2s, background .2s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--ns-violet), var(--ns-cyan));
+  box-shadow:
+    inset 0 0 0 1px var(--ns-violet),
+    0 0 12px rgba(124, 92, 255, 0.65),
+    0 0 20px rgba(34, 211, 238, 0.25);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: var(--ns-lime);
+  box-shadow:
+    inset 0 0 0 1px var(--ns-lime),
+    0 0 14px rgba(198, 255, 60, 0.6);
+}
+
+::-webkit-scrollbar-corner {
+  background: rgba(15, 16, 24, 0.6);
+}
+
+/* Tighter scrollbar inside the .ns chrome containers (agent terminal,
+   overflow panels) — matches the design's compact 6px treatment. */
 .ns ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
-}
-.ns ::-webkit-scrollbar-thumb {
-  background: var(--ns-line-strong);
-  border-radius: 3px;
-}
-.ns ::-webkit-scrollbar-track {
-  background: transparent;
 }
 
 /* Pages using the chrome force-paint dark to avoid white FOUC */
