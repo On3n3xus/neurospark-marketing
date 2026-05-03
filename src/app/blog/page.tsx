@@ -1,66 +1,134 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { getAllPosts } from "@/lib/blog";
+import TerminalShell from "@/components/terminal/TerminalShell";
+import PageHero from "@/components/terminal/PageHero";
+
+const MONO = "var(--font-jetbrains-mono), ui-monospace, monospace";
+const DISPLAY = "var(--font-space-grotesk), system-ui, sans-serif";
 
 export const metadata: Metadata = {
   title: "Blog",
   description:
-    "Insights on branding, web development, video production, and digital marketing from the Neurospark team.",
+    "Field notes from Neurospark — AI marketing operator playbooks, case files, and tactical breakdowns for small and mid-size teams.",
 };
 
 export default function BlogPage() {
   const posts = getAllPosts();
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Nav spacer */}
-      <div className="h-[52px]" />
-
-      <main className="max-w-4xl mx-auto px-6 py-16 md:py-24">
-        <div className="mb-16">
-          <p className="section-label mb-3">Blog</p>
-          <h1 className="text-4xl md:text-5xl font-bold tracking-[-0.03em] text-text-primary mb-4">
-            Insights & Ideas
-          </h1>
-          <p className="text-lg text-text-secondary max-w-xl">
-            Thoughts on branding, web development, video production, and growing
-            businesses through creative strategy.
-          </p>
-        </div>
-
-        <div className="space-y-8">
-          {posts.map((post) => (
-            <Link
+    <TerminalShell>
+      <PageHero
+        route="blog"
+        title="Field notes."
+        intro="Operator playbooks, case files, and tactical breakdowns for small and mid-size marketing teams."
+      />
+      <section style={{ paddingBottom: 80 }}>
+        <ul
+          style={{
+            listStyle: "none",
+            padding: 0,
+            margin: 0,
+            border: "1px solid var(--ns-line)",
+          }}
+        >
+          {posts.map((post, i) => (
+            <li
               key={post.slug}
-              href={`/blog/${post.slug}`}
-              className="block card p-8 group"
+              style={{
+                borderBottom:
+                  i < posts.length - 1 ? "1px solid var(--ns-line)" : "none",
+              }}
             >
-              <div className="flex items-center gap-3 mb-3">
-                <time className="text-xs text-text-tertiary font-mono">
-                  {new Date(post.date).toLocaleDateString("en-US", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })}
-                </time>
-                <span className="text-text-tertiary">·</span>
-                <span className="text-xs text-text-tertiary font-mono">
+              <Link
+                href={`/blog/${post.slug}`}
+                className="post-row"
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "60px 1fr 160px 80px 40px",
+                  gap: 20,
+                  alignItems: "center",
+                  padding: "26px 24px",
+                  textDecoration: "none",
+                  color: "inherit",
+                  transition: "background .2s",
+                }}
+              >
+                <div
+                  style={{
+                    fontFamily: MONO,
+                    fontSize: 11,
+                    color: "var(--ns-violet)",
+                    letterSpacing: "0.18em",
+                  }}
+                >
+                  {String(i + 1).padStart(2, "0")}
+                </div>
+                <div>
+                  <div
+                    style={{
+                      fontFamily: DISPLAY,
+                      fontWeight: 500,
+                      fontSize: 20,
+                      color: "var(--ns-text)",
+                      letterSpacing: "-0.01em",
+                    }}
+                  >
+                    {post.title}
+                  </div>
+                  <div
+                    style={{
+                      marginTop: 4,
+                      fontFamily: MONO,
+                      fontSize: 11,
+                      color: "var(--ns-text-dim)",
+                    }}
+                  >
+                    {post.excerpt}
+                  </div>
+                </div>
+                <div
+                  style={{
+                    fontFamily: MONO,
+                    fontSize: 10,
+                    color: "var(--ns-text-faint)",
+                    letterSpacing: "0.15em",
+                  }}
+                >
+                  {post.author}
+                </div>
+                <div
+                  style={{
+                    fontFamily: MONO,
+                    fontSize: 10,
+                    color: "var(--ns-text-faint)",
+                    letterSpacing: "0.15em",
+                  }}
+                >
                   {post.readingTime}
-                </span>
-              </div>
-              <h2 className="text-xl md:text-2xl font-semibold text-text-primary group-hover:text-accent transition-colors mb-2 tracking-tight">
-                {post.title}
-              </h2>
-              <p className="text-sm text-text-secondary leading-relaxed">
-                {post.excerpt}
-              </p>
-              <p className="text-xs text-text-tertiary mt-3">
-                By {post.author}
-              </p>
-            </Link>
+                </div>
+                <div
+                  className="post-arr"
+                  style={{
+                    color: "var(--ns-text-faint)",
+                    textAlign: "right",
+                  }}
+                >
+                  ↗
+                </div>
+              </Link>
+            </li>
           ))}
-        </div>
-      </main>
-    </div>
+        </ul>
+      </section>
+      <style>{`
+        .post-row:hover { background: rgba(124,92,255,0.04); }
+        .post-row:hover .post-arr { color: var(--ns-violet); }
+        @media (max-width: 880px) {
+          .post-row { grid-template-columns: 40px 1fr 30px !important; gap: 12px !important; }
+          .post-row > *:nth-child(3), .post-row > *:nth-child(4) { display: none; }
+        }
+      `}</style>
+    </TerminalShell>
   );
 }

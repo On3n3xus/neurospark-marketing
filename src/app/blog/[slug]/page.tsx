@@ -1,26 +1,26 @@
 import { notFound } from "next/navigation";
-import Link from "next/link";
 import type { Metadata } from "next";
-import { getAllPosts, getPostBySlug } from "@/lib/blog";
+import Link from "next/link";
+import { getPostBySlug, posts } from "@/lib/blog";
+import BlogTerminalShell from "@/components/terminal/BlogTerminalShell";
+import JsonLd from "@/components/terminal/JsonLd";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
 export async function generateStaticParams() {
-  return getAllPosts().map((post) => ({ slug: post.slug }));
+  return posts.map((p) => ({ slug: p.slug }));
 }
 
-export async function generateMetadata({
-  params,
-}: PageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const post = getPostBySlug(slug);
   if (!post) return {};
-
   return {
     title: post.title,
     description: post.excerpt,
+    alternates: { canonical: `/blog/${slug}` },
     openGraph: {
       title: post.title,
       description: post.excerpt,
@@ -31,97 +31,46 @@ export async function generateMetadata({
   };
 }
 
+const MONO = "var(--font-jetbrains-mono), ui-monospace, monospace";
+
 export default async function BlogPostPage({ params }: PageProps) {
   const { slug } = await params;
   const post = getPostBySlug(slug);
+  if (!post) notFound();
 
-  if (!post) {
-    notFound();
-  }
-
-  // Dynamic import of MDX content
-  let Content: React.ComponentType;
+  // Dynamic MDX import — content lives in src/content/blog/[slug].mdx
+  let MDXContent: React.ComponentType;
   try {
-    const mdxModule = await import(`@/content/blog/${slug}.mdx`);
-    Content = mdxModule.default;
+    const mod = await import(`@/content/blog/${slug}.mdx`);
+    MDXContent = mod.default;
   } catch {
     notFound();
   }
 
-  // JSON-LD Article schema
-  const jsonLd = {
+  const articleSchema = {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: post.title,
-    datePublished: post.date,
-    author: {
-      "@type": "Person",
-      name: post.author,
-    },
-    publisher: {
-      "@type": "Organization",
-      name: "Neurospark Marketing",
-    },
     description: post.excerpt,
+    author: { "@type": "Person", name: post.author },
+    datePublished: post.date,
+    mainEntityOfPage: { "@type": "WebPage", "@id": `https://neurosparkmarketing.com/blog/${slug}` },
+    inLanguage: "en-US",
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-
-      {/* Nav */}
-      <nav className="sticky top-0 z-40 px-6 py-4 bg-surface/80 backdrop-blur-xl border-b border-border">
-        <div className="max-w-3xl mx-auto flex items-center justify-between">
-          <Link
-            href="/blog"
-            className="text-sm text-text-secondary hover:text-accent transition-colors"
-          >
-            ← Blog
-          </Link>
-          <span className="text-xs text-text-tertiary font-mono">
-            {post.readingTime}
-          </span>
-        </div>
-      </nav>
-
-      <main className="max-w-3xl mx-auto px-6 py-16">
-        {/* Header */}
-        <header className="mb-12">
-          <div className="flex items-center gap-3 mb-4">
-            <time className="text-sm text-text-tertiary font-mono">
-              {new Date(post.date).toLocaleDateString("en-US", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              })}
-            </time>
-            <span className="text-text-tertiary">·</span>
-            <span className="text-sm text-text-tertiary">{post.author}</span>
-          </div>
-          <h1 className="text-3xl md:text-5xl font-bold tracking-[-0.03em] text-text-primary mb-4">
-            {post.title}
-          </h1>
-          <p className="text-lg text-text-secondary">{post.excerpt}</p>
-        </header>
-
-        <div className="h-px bg-border mb-12" />
-
-        {/* MDX Content */}
-        <article className="prose-neurospark">
-          <Content />
-        </article>
-
-        {/* CTA */}
-        <div className="mt-16 pt-8 border-t border-border text-center">
-          <p className="text-text-secondary mb-4">Enjoyed this article?</p>
-          <Link href="/#contact" className="btn-pill px-8 py-3">
-            Work with Us
-          </Link>
-        </div>
-      </main>
-    </div>
+    <BlogTerminalShell meta={post}>
+      <JsonLd data={articleSchema} />
+      <MDXContent />
+      <hr />
+      <p style={{ fontFamily: MONO, fontSize: 11, color: "var(--ns-text-faint)", letterSpacing: "0.18em", textTransform: "uppercase" }}>
+        // Read next
+      </p>
+      <p>
+        Want this for your team?{" "}
+        <Link href="/contact">Open a channel</Link> · or{" "}
+        <Link href="/services">browse the modules</Link>.
+      </p>
+    </BlogTerminalShell>
   );
 }
