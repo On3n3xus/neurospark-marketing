@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
@@ -14,38 +14,53 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space-grotesk",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600"],
+});
+
 const BASE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://neurospark.agency";
+  process.env.NEXT_PUBLIC_SITE_URL || "https://neurosparkmarketing.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
-    default: "Neurospark Marketing | Full-Service Creative Agency",
-    template: "%s | Neurospark Marketing",
+    default: "Neurospark · AI Marketing Operator",
+    template: "%s · Neurospark",
   },
   description:
-    "Neurospark Marketing is a full-service creative agency specializing in branding, web development, video production, social media, paid advertising, and content strategy.",
+    "Neurospark deploys autonomous AI agents that run marketing for small and mid-size teams — outbound, content, paid media, brand intelligence, automation, and forecasting.",
   keywords: [
-    "creative agency",
-    "branding",
-    "web development",
-    "video production",
-    "social media marketing",
-    "digital marketing",
-    "content strategy",
-    "paid advertising",
+    "ai marketing agency",
+    "ai marketing operator",
+    "autonomous agents",
+    "ai content engine",
+    "predictive paid media",
+    "brand intelligence",
+    "growth automation",
+    "ai seo",
+    "neurospark",
   ],
   openGraph: {
-    title: "Neurospark Marketing | Full-Service Creative Agency",
-    description: "We build brands, websites, and campaigns that spark growth.",
+    title: "Neurospark · AI Marketing Operator",
+    description:
+      "Autonomous agents that run your marketing — content, paid media, SEO, brand intel, automation, forecasting.",
     type: "website",
-    siteName: "Neurospark Marketing",
+    siteName: "Neurospark",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Neurospark Marketing | Full-Service Creative Agency",
-    description: "We build brands, websites, and campaigns that spark growth.",
+    title: "Neurospark · AI Marketing Operator",
+    description:
+      "Autonomous agents that run your marketing — content, paid media, SEO, brand intel, automation, forecasting.",
   },
   robots: { index: true, follow: true },
 };
@@ -53,17 +68,17 @@ export const metadata: Metadata = {
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  name: "Neurospark Marketing",
+  name: "Neurospark",
   url: BASE_URL,
   description:
-    "Full-service creative agency specializing in branding, web development, video production, social media, paid advertising, and content strategy.",
+    "AI marketing operator deploying autonomous agents for small and mid-size teams.",
   services: [
-    "Branding",
-    "Web Development",
-    "Video Production",
-    "Social Media Marketing",
-    "Paid Advertising",
-    "Content Strategy",
+    "AI Agents",
+    "Content Engine",
+    "Paid Media AI",
+    "Brand Intelligence",
+    "Growth Automation",
+    "Revenue Forecast",
   ],
 };
 
@@ -75,7 +90,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable}`}
+      className={`${geistSans.variable} ${geistMono.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable}`}
     >
       <head>
         <script
@@ -83,7 +98,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="bg-background text-text-primary font-sans antialiased">
+      <body className="antialiased">
         {children}
         <Analytics />
         <SpeedInsights />

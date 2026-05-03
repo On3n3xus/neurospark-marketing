@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* ============================================================
+   Apple-clean tokens — kept for /blog and /work legacy pages
+   ============================================================ */
 :root {
   --background: #fafafa;
   --surface: #ffffff;
@@ -11,6 +14,22 @@
   --accent-hover: #0077ed;
   --border: #d2d2d7;
   --card-shadow: rgba(0, 0, 0, 0.04);
+
+  /* ============================================================
+     Neurospark · TERMINAL.OS tokens — violet brand spine
+     ============================================================ */
+  --ns-violet: #7C5CFF;
+  --ns-violet-deep: #4B2FB7;
+  --ns-cyan: #22D3EE;
+  --ns-lime: #C6FF3C;
+  --ns-magenta: #FF3DAA;
+  --ns-bg: #0A0B10;
+  --ns-bg-2: #0F1018;
+  --ns-line: rgba(124, 92, 255, 0.18);
+  --ns-line-strong: rgba(124, 92, 255, 0.35);
+  --ns-text: #E8E6F0;
+  --ns-text-dim: rgba(232, 230, 240, 0.55);
+  --ns-text-faint: rgba(232, 230, 240, 0.32);
 }
 
 @theme inline {
@@ -24,15 +43,27 @@
   --color-border: var(--border);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  --color-ns-violet: var(--ns-violet);
+  --color-ns-violet-deep: var(--ns-violet-deep);
+  --color-ns-cyan: var(--ns-cyan);
+  --color-ns-lime: var(--ns-lime);
+  --color-ns-magenta: var(--ns-magenta);
+  --color-ns-bg: var(--ns-bg);
+  --color-ns-text: var(--ns-text);
+  --font-display: var(--font-space-grotesk);
+  --font-jetbrains: var(--font-jetbrains-mono);
 }
 
 html {
   scroll-behavior: smooth;
 }
 
+/* Default body to the TERMINAL.OS dark theme — legacy pages
+   (/blog, /work) wrap in their own bg-background containers. */
 body {
-  background: var(--background);
-  color: var(--text-primary);
+  background: var(--ns-bg);
+  color: var(--ns-text);
 }
 
 ::selection {
@@ -40,7 +71,9 @@ body {
   color: var(--text-primary);
 }
 
-/* Section label style */
+/* ============================================================
+   Apple-clean reusable utilities (legacy pages)
+   ============================================================ */
 .section-label {
   font-family: var(--font-geist-mono);
   font-size: 12px;
@@ -50,7 +83,6 @@ body {
   color: var(--text-tertiary);
 }
 
-/* Blue pill button */
 .btn-pill {
   display: inline-flex;
   align-items: center;
@@ -68,7 +100,6 @@ body {
   background: var(--accent-hover);
 }
 
-/* Card base */
 .card {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -79,4 +110,137 @@ body {
 .card:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 30px var(--card-shadow), 0 2px 8px var(--card-shadow);
+}
+
+/* ============================================================
+   TERMINAL.OS — keyframes, scoped styles
+   ============================================================ */
+
+/* Scope reset for the terminal chrome */
+.ns,
+.ns * {
+  box-sizing: border-box;
+}
+.ns {
+  font-family: var(--font-space-grotesk), system-ui, sans-serif;
+  color: var(--ns-text);
+}
+.ns ::selection {
+  background: var(--ns-violet);
+  color: white;
+}
+.ns ::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.ns ::-webkit-scrollbar-thumb {
+  background: var(--ns-line-strong);
+  border-radius: 3px;
+}
+.ns ::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Pages using the chrome force-paint dark to avoid white FOUC */
+body.ns-body {
+  background: var(--ns-bg);
+}
+
+/* Animations from the design system */
+@keyframes ns-grid-drift {
+  0% { background-position: 0 0, 0 0; }
+  100% { background-position: 60px 60px, 60px 60px; }
+}
+@keyframes ns-scan {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+@keyframes ns-flicker {
+  0%, 100% { opacity: 1; }
+  92% { opacity: 1; }
+  93% { opacity: 0.4; }
+  94% { opacity: 1; }
+  97% { opacity: 0.7; }
+  98% { opacity: 1; }
+}
+@keyframes ns-pulse {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.03); }
+}
+@keyframes ns-marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes ns-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+@keyframes ns-rotate {
+  from { transform: rotate(0); }
+  to { transform: rotate(360deg); }
+}
+@keyframes ns-rise {
+  from { transform: translateY(8px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Shared atoms used across components */
+.ns-ai-thinking::after {
+  content: '';
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--ns-violet);
+  animation: ns-blink .8s infinite;
+  margin-left: 4px;
+  vertical-align: middle;
+}
+
+.ns-placeholder {
+  position: relative;
+  background:
+    repeating-linear-gradient(
+      135deg,
+      rgba(124, 92, 255, 0.06) 0 8px,
+      transparent 8px 16px
+    ),
+    rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--ns-line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
+  font-size: 11px;
+  color: var(--ns-text-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* Native range input styling — matches violet brand spine */
+.ns input[type='range'] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  background: rgba(124, 92, 255, 0.2);
+  border-radius: 2px;
+  outline: none;
+}
+.ns input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  background: var(--ns-violet);
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 12px rgba(124, 92, 255, 0.6);
+}
+.ns input[type='range']::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  background: var(--ns-violet);
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
 }
