@@ -7,11 +7,7 @@ const COLS = [
   { h: "COMPANY", items: ["About", "Work", "Team", "Press"] },
   {
     h: "CONTACT",
-    items: [
-      "hello@neurosparkmarketing.com",
-      "+1 (651) 408-5082",
-      "Minneapolis · Remote",
-    ],
+    items: ["Danilo@neurosparkmarketing.com", "Minneapolis · Remote"],
   },
 ];
 

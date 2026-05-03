@@ -48,7 +48,7 @@ export default function ContactPage() {
             DIRECT
           </div>
           <a
-            href="mailto:hello@neurosparkmarketing.com"
+            href="mailto:Danilo@neurosparkmarketing.com"
             style={{
               color: "var(--ns-text)",
               textDecoration: "none",
@@ -56,33 +56,8 @@ export default function ContactPage() {
               paddingBottom: 1,
             }}
           >
-            hello@neurosparkmarketing.com
+            Danilo@neurosparkmarketing.com
           </a>
-          <br />
-          <a
-            href="tel:+16514085082"
-            style={{
-              color: "var(--ns-text)",
-              textDecoration: "none",
-              borderBottom: "1px solid var(--ns-line-strong)",
-              paddingBottom: 1,
-            }}
-          >
-            +1 (651) 408-5082
-          </a>
-          <br />
-          <br />
-          <div
-            style={{
-              color: "var(--ns-violet)",
-              letterSpacing: "0.18em",
-              marginBottom: 14,
-            }}
-          >
-            VOICE_AGENT
-          </div>
-          Call our line — Danilo (the AI receptionist) will route you. Calls
-          are logged to the CRM in real time.
           <br />
           <br />
           <div
