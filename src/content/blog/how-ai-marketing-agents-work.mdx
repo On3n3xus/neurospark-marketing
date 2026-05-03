@@ -1,0 +1,67 @@
+Most of what gets sold as "AI marketing" is a chatbot wrapped in a logo. To understand how AI marketing agents actually work, you have to pull the bundle apart and look at the layers underneath — the model, the tools, the job description, and the orchestration that decides what runs when.
+
+This post is the technical version of the answer. We deploy named agents — Aria for outbound, Beam for content, Helix for paid media — inside real client stacks, and the architecture is more boring and more interesting than the marketing copy suggests.
+
+## The three layers of an AI marketing agent
+
+There is no single thing called "an AI marketing agent." There are three things stacked on top of each other.
+
+The **model layer** is the underlying language model — Claude, GPT, Gemini, Llama. The model knows how to write and reason. It does not know your brand, your CRM schema, or what time your prospect's office opens.
+
+The **agent layer** is a wrapper around the model. It gives the model a job description, a set of tools (CRM read/write, email send, calendar lookup, web search), and a loop that keeps running until the job is done or it hits a limit. This is where "an agent" actually lives.
+
+The **orchestration layer** sits above all the agents. It decides which agent runs, in what order, with what context, and what to do when one fails. In a small stack this is a cron job and a queue. In a mature stack it is a workflow graph with retries, observability, and human-in-the-loop checkpoints.
+
+Most products bundle the three layers together and call the bundle "an agent." That makes pricing simpler and architecture worse, because you cannot replace the model when a better one ships, you cannot swap tools when your CRM changes, and you cannot move orchestration to a different runtime without rebuilding the whole thing.
+
+## What an outbound agent actually does
+
+Take Aria, the outbound agent. Her job in production is narrow: research a target account, write a personalized opener, send it through the sequencing tool, and route the reply to whoever should handle it.
+
+To do that job, she needs four things wired together.
+
+She needs a **model** — we use a frontier model for the writing that goes to a human prospect, and a faster, cheaper model for the research summarization. The two-tier pattern matters because outbound volume is high and the cheap model handles 80% of the token spend.
+
+She needs **tools**. Apollo or Clay for company and contact data. The CRM for context on whether this account has been touched before. The calendar for booking links. The sequencing platform (Smartlead, Instantly, Outreach) for the actual send. Each tool is a typed function the agent can call.
+
+She needs a **prompt** — a system prompt that knows your brand voice, your ICP, and the specific opener patterns you want her to use. This is where most "AI SDR" products fall apart, because the prompt is generic and the output reads like everyone else's generic AI outbound.
+
+She needs a **job description** with success criteria. "Send 50 personalized openers per day to accounts in the ICP, do not touch accounts that have been emailed in the last 90 days, escalate replies that contain pricing questions to a human." Without the criteria, she is just a chatbot.
+
+When all four are wired together, Aria runs on a schedule, produces work that a human can audit in five minutes per day, and books meetings. Without all four, she produces noise.
+
+## Why marketing benefits from agents specifically
+
+Traditional marketing automation is a flowchart. If a contact does X, send Y. The branches are finite, the logic is brittle, and the moment a real human deviates from the expected path, the automation either spams them or drops them.
+
+An agentic system is different in one specific way: the agent has judgment. It can read a reply that says "we already use HubSpot" and decide whether to escalate, send a competitor-displacement sequence, or pause the contact for 90 days. A flowchart cannot do that without a developer adding a new branch every time a new objection shows up.
+
+That judgment is what makes agents useful for marketing functions where the inputs are messy: outbound replies, content briefs, ad copy variations, customer support triage. It is also what makes them dangerous if you deploy them without observability, because they will quietly do the wrong thing at scale until someone reads the logs.
+
+## The agents we deploy and what they own
+
+We run a small roster of named agents because the alternative — one giant generalist agent — produces worse output and is harder to debug.
+
+**Aria** owns outbound. Research, personalization, sequencing, reply triage. She talks to Apollo, the CRM, and the sending tool.
+
+**Beam** owns content. She drafts long-form briefs from a keyword and a brand voice file, runs the draft through a fact-check pass, and posts to a review queue. A human edits and ships. Beam does not publish unsupervised.
+
+**Helix** owns paid media analysis. She pulls Google Ads, Meta, and LinkedIn performance data nightly, identifies underperforming ad sets, and writes a daily memo with three recommended actions ranked by expected impact. A media buyer executes the actions.
+
+The split matters because each agent has a narrow tool set, a narrow prompt, and a narrow success metric. When something breaks, we know which agent broke it. When something works, we know which agent to scale.
+
+## How to deploy your first agent
+
+The fastest way in is to pick one job, one segment, one agent. Not a platform. Not a roadmap. One agent doing one thing for one slice of your market.
+
+Start by writing the job description as if you were hiring a human contractor. What does success look like in week one, month one, quarter one? What tools does the contractor need access to? What decisions do they get to make alone, and what gets escalated?
+
+Then build the agent against that job description. We typically ship the first version in two to three weeks, with the agent running in shadow mode for a week — producing output that a human reviews before anything goes out. After a week of clean output, the agent moves to live mode with a daily review checkpoint.
+
+Once one agent is producing meaningful work, add the next one. Resist the urge to build a platform. Platforms are what you have after five agents, not what you start with.
+
+You can read more about how this fits into a full operator stack on our [services page](/services), which lays out where agents sit relative to traditional marketing functions.
+
+## What to do next
+
+If you want to see what an agent looks like in practice, the homepage has Aria wired to a live model — give her a prompt and watch the loop run. If you want one deployed inside your stack, [open a channel](/contact) and we will send you a 90-day deployment plan with a single agent, a single job, and a real success metric.

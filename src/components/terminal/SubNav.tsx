@@ -9,6 +9,7 @@ const MONO = "var(--font-jetbrains-mono), ui-monospace, monospace";
 const HREF: Record<string, string> = {
   home: "/",
   services: "/services",
+  industries: "/industries",
   work: "/work",
   about: "/about",
   contact: "/contact",

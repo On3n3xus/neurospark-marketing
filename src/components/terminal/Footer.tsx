@@ -4,6 +4,7 @@ const MONO = "var(--font-jetbrains-mono), ui-monospace, monospace";
 
 const COLS = [
   { h: "OPERATIONS", items: ["Agents", "Content Engine", "Paid Media", "Brand Intel"] },
+  { h: "INDUSTRIES", items: ["Dental", "Med Spa", "Real Estate", "HVAC", "Plumbing", "Roofing"] },
   { h: "COMPANY", items: ["About", "Work", "Team", "Press"] },
   {
     h: "CONTACT",
@@ -23,7 +24,7 @@ export default function Footer() {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "2fr 1fr 1fr 1fr",
+          gridTemplateColumns: "1.6fr 1fr 1fr 1fr 1.4fr",
           gap: 40,
           maxWidth: 1480,
           margin: "0 auto",

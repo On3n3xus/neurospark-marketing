@@ -34,6 +34,7 @@ const TIERS = [
 export default function PricingGrid() {
   return (
     <section
+      id="pricing"
       style={{ padding: "80px 0", borderTop: "1px solid var(--ns-line)" }}
     >
       <SectionHead

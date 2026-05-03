@@ -24,6 +24,7 @@ export type Telemetry = {
 export const TERMINAL_ROUTES = [
   "home",
   "services",
+  "industries",
   "work",
   "about",
   "contact",

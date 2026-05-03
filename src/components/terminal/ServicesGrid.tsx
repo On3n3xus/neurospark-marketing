@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import SectionHead from "./SectionHead";
 import { TERMINAL_SERVICES } from "@/lib/terminal-data";
 
@@ -26,8 +27,9 @@ export default function ServicesGrid({ limit }: { limit?: number }) {
         }}
       >
         {items.map((s, i) => (
-          <div
+          <Link
             key={s.id}
+            href={`/services/${s.id}`}
             className="service-cell"
             style={{
               padding: 28,
@@ -38,6 +40,9 @@ export default function ServicesGrid({ limit }: { limit?: number }) {
               position: "relative",
               cursor: "pointer",
               transition: "background .2s",
+              textDecoration: "none",
+              color: "inherit",
+              display: "block",
             }}
           >
             <div
@@ -121,7 +126,7 @@ export default function ServicesGrid({ limit }: { limit?: number }) {
                 {s.metricLabel}
               </span>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
       <style>{`
