@@ -6,6 +6,7 @@ import ServicesGrid from "@/components/terminal/ServicesGrid";
 import CampaignGenerator from "@/components/terminal/CampaignGenerator";
 import ROISimulator from "@/components/terminal/ROISimulator";
 import StrategyPlan from "@/components/terminal/StrategyPlan";
+import BootSequence from "@/components/terminal/BootSequence";
 import WorkBand from "@/components/terminal/WorkBand";
 import AgentDemo from "@/components/terminal/AgentDemo";
 
@@ -19,6 +20,7 @@ export default function Home() {
       <CampaignGenerator />
       <ROISimulator />
       <StrategyPlan />
+      <BootSequence />
       <WorkBand />
       <AgentDemo />
     </TerminalShell>
