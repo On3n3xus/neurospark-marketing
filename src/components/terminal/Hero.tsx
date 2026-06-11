@@ -79,6 +79,36 @@ export default function Hero() {
 
   return (
     <section ref={ref} style={{ padding: "80px 0 60px", position: "relative" }}>
+      {/* Ambient neural-network loop behind the hero content */}
+      <div
+        aria-hidden
+        style={{
+          position: "absolute",
+          inset: "-40px -24px 0",
+          overflow: "hidden",
+          zIndex: 0,
+          pointerEvents: "none",
+          maskImage:
+            "radial-gradient(ellipse 75% 70% at 50% 40%, black 30%, transparent 80%)",
+          WebkitMaskImage:
+            "radial-gradient(ellipse 75% 70% at 50% 40%, black 30%, transparent 80%)",
+        }}
+      >
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          src="/hero/neural-loop.mp4"
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            opacity: 0.35,
+          }}
+        />
+      </div>
       <div
         className="hero-grid"
         style={{
@@ -86,6 +116,8 @@ export default function Hero() {
           gridTemplateColumns: "1.4fr 1fr",
           gap: 60,
           alignItems: "end",
+          position: "relative",
+          zIndex: 1,
         }}
       >
         <div>

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import SectionHead from "./SectionHead";
 import Reveal from "./motion/Reveal";
 import { TERMINAL_SERVICES } from "@/lib/terminal-data";
@@ -58,6 +59,27 @@ export default function ServicesGrid({ limit }: { limit?: number }) {
               display: "block",
             }}
           >
+            <div
+              className="service-img"
+              style={{
+                margin: "-28px -28px 20px",
+                overflow: "hidden",
+                borderBottom: "1px solid var(--ns-line)",
+              }}
+            >
+              <Image
+                src={`/services/${s.id}.png`}
+                alt={s.name}
+                width={672}
+                height={384}
+                style={{
+                  width: "100%",
+                  height: "auto",
+                  display: "block",
+                  transition: "transform .6s cubic-bezier(.2,.8,.2,1)",
+                }}
+              />
+            </div>
             <div
               style={{
                 display: "flex",
@@ -155,6 +177,7 @@ export default function ServicesGrid({ limit }: { limit?: number }) {
           pointer-events: none;
         }
         .service-cell:hover::after { opacity: 1; }
+        .service-cell:hover .service-img img { transform: scale(1.06); }
         @media (max-width: 880px) {
           .services-grid { grid-template-columns: 1fr !important; }
           .service-cell { border-right: none !important; border-bottom: 1px solid var(--ns-line) !important; }
