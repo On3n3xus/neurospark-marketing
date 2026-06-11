@@ -1,6 +1,7 @@
 "use client";
 
 import SectionHead from "./SectionHead";
+import Reveal from "./motion/Reveal";
 import { TERMINAL_WORK } from "@/lib/terminal-data";
 
 const MONO = "var(--font-jetbrains-mono), ui-monospace, monospace";
@@ -9,7 +10,10 @@ const DISPLAY = "var(--font-space-grotesk), system-ui, sans-serif";
 export default function WorkBand() {
   return (
     <section style={{ padding: "80px 0", borderTop: "1px solid var(--ns-line)" }}>
-      <SectionHead label="// SELECT WORK" title="Operators in production." />
+      <Reveal>
+        <SectionHead label="// SELECT WORK" title="Operators in production." />
+      </Reveal>
+      <Reveal stagger=".work-row" staggerEach={0.09} y={24}>
       <div style={{ marginTop: 48 }}>
         {TERMINAL_WORK.map((w, i) => (
           <a
@@ -70,6 +74,7 @@ export default function WorkBand() {
           </a>
         ))}
       </div>
+      </Reveal>
       <style>{`
         .work-row:hover { background: rgba(124,92,255,0.04); }
         .work-row:hover .work-arr { color: var(--ns-violet) !important; }

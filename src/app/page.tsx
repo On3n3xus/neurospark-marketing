@@ -9,20 +9,33 @@ import StrategyPlan from "@/components/terminal/StrategyPlan";
 import BootSequence from "@/components/terminal/BootSequence";
 import WorkBand from "@/components/terminal/WorkBand";
 import AgentDemo from "@/components/terminal/AgentDemo";
+import Reveal from "@/components/terminal/motion/Reveal";
 
 export default function Home() {
   return (
     <TerminalShell>
       <Hero />
       <Telemetry />
-      <LiveSignals />
+      <Reveal y={24}>
+        <LiveSignals />
+      </Reveal>
       <ServicesGrid limit={6} />
-      <CampaignGenerator />
-      <ROISimulator />
-      <StrategyPlan />
-      <BootSequence />
+      <Reveal>
+        <CampaignGenerator />
+      </Reveal>
+      <Reveal>
+        <ROISimulator />
+      </Reveal>
+      <Reveal>
+        <StrategyPlan />
+      </Reveal>
+      <Reveal>
+        <BootSequence />
+      </Reveal>
       <WorkBand />
-      <AgentDemo />
+      <Reveal>
+        <AgentDemo />
+      </Reveal>
     </TerminalShell>
   );
 }

@@ -2,7 +2,15 @@
 
 import Link from "next/link";
 import SectionHead from "./SectionHead";
+import Reveal from "./motion/Reveal";
 import { TERMINAL_SERVICES } from "@/lib/terminal-data";
+
+/* Cursor spotlight — track pointer position into CSS vars for the ::after glow */
+function trackSpotlight(e: React.MouseEvent<HTMLAnchorElement>) {
+  const r = e.currentTarget.getBoundingClientRect();
+  e.currentTarget.style.setProperty("--mx", `${e.clientX - r.left}px`);
+  e.currentTarget.style.setProperty("--my", `${e.clientY - r.top}px`);
+}
 
 const MONO = "var(--font-jetbrains-mono), ui-monospace, monospace";
 const DISPLAY = "var(--font-space-grotesk), system-ui, sans-serif";
@@ -11,11 +19,14 @@ export default function ServicesGrid({ limit }: { limit?: number }) {
   const items = limit ? TERMINAL_SERVICES.slice(0, limit) : TERMINAL_SERVICES;
   return (
     <section style={{ padding: "80px 0" }}>
-      <SectionHead
-        label="// SERVICES"
-        title="Six systems. One operator."
-        sub="Each module ships in 21 days. Plug into your existing stack — Slack, HubSpot, Shopify, GA4, Snowflake."
-      />
+      <Reveal>
+        <SectionHead
+          label="// SERVICES"
+          title="Six systems. One operator."
+          sub="Each module ships in 21 days. Plug into your existing stack — Slack, HubSpot, Shopify, GA4, Snowflake."
+        />
+      </Reveal>
+      <Reveal stagger=".service-cell" staggerEach={0.07}>
       <div
         className="services-grid"
         style={{
@@ -31,7 +42,9 @@ export default function ServicesGrid({ limit }: { limit?: number }) {
             key={s.id}
             href={`/services/${s.id}`}
             className="service-cell"
+            onMouseMove={trackSpotlight}
             style={{
+              overflow: "hidden",
               padding: 28,
               borderRight:
                 i % 3 !== 2 ? "1px solid var(--ns-line)" : "none",
@@ -129,8 +142,19 @@ export default function ServicesGrid({ limit }: { limit?: number }) {
           </Link>
         ))}
       </div>
+      </Reveal>
       <style>{`
         .service-cell:hover { background: rgba(124,92,255,0.05); }
+        .service-cell::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: radial-gradient(240px circle at var(--mx, 50%) var(--my, 50%), rgba(124,92,255,0.14), transparent 65%);
+          opacity: 0;
+          transition: opacity .3s;
+          pointer-events: none;
+        }
+        .service-cell:hover::after { opacity: 1; }
         @media (max-width: 880px) {
           .services-grid { grid-template-columns: 1fr !important; }
           .service-cell { border-right: none !important; border-bottom: 1px solid var(--ns-line) !important; }

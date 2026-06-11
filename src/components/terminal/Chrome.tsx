@@ -1,4 +1,6 @@
 import type { ReactNode } from "react";
+import ParticleField from "./motion/ParticleField";
+import ScrollProgress from "./motion/ScrollProgress";
 
 export default function Chrome({ children }: { children: ReactNode }) {
   return (
@@ -33,6 +35,10 @@ export default function Chrome({ children }: { children: ReactNode }) {
           zIndex: 0,
         }}
       />
+      {/* Neural particle network */}
+      <ParticleField />
+      {/* Scroll progress bar */}
+      <ScrollProgress />
       {/* Vignette violet glow */}
       <div
         aria-hidden
