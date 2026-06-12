@@ -12,6 +12,7 @@ export default function SectionHead({
 }) {
   return (
     <div
+      className="section-head"
       style={{
         display: "grid",
         gridTemplateColumns: "1fr 1fr",
@@ -56,6 +57,15 @@ export default function SectionHead({
           {sub}
         </p>
       )}
+      <style>{`
+        @media (max-width: 720px) {
+          .section-head {
+            grid-template-columns: 1fr !important;
+            gap: 16px !important;
+            align-items: start !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }

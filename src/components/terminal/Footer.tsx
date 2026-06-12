@@ -56,6 +56,7 @@ export default function Footer() {
       }}
     >
       <div
+        className="footer-grid"
         style={{
           display: "grid",
           gridTemplateColumns: "1.6fr 1fr 1fr 1fr 1.4fr",
@@ -147,12 +148,15 @@ export default function Footer() {
         ))}
       </div>
       <div
+        className="footer-bottom"
         style={{
           marginTop: 60,
           padding: "14px 0",
           borderTop: "1px solid var(--ns-line)",
           display: "flex",
           justifyContent: "space-between",
+          flexWrap: "wrap",
+          gap: 8,
           fontFamily: MONO,
           fontSize: 10,
           color: "var(--ns-text-faint)",
@@ -167,6 +171,19 @@ export default function Footer() {
       </div>
       <style>{`
         .footer-link:hover { color: var(--ns-violet) !important; }
+        /* Tablet: brand spans the row, links wrap to a 2-col grid below it */
+        @media (max-width: 880px) {
+          .footer-grid {
+            grid-template-columns: 1fr 1fr !important;
+            gap: 32px !important;
+          }
+          .footer-grid > :first-child { grid-column: 1 / -1; }
+        }
+        /* Phone: tighten the columns and let the bottom bar stack */
+        @media (max-width: 480px) {
+          .footer-grid { gap: 28px 24px !important; }
+          .footer-bottom { justify-content: flex-start !important; }
+        }
       `}</style>
     </footer>
   );

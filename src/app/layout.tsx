@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -63,6 +63,13 @@ export const metadata: Metadata = {
       "Autonomous agents that run your marketing — content, paid media, SEO, brand intel, automation, forecasting.",
   },
   robots: { index: true, follow: true },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#0A0B10",
+  colorScheme: "dark",
 };
 
 const jsonLd = {
