@@ -152,8 +152,9 @@ export default function Hero() {
             </MaskedLine>
             <MaskedLine>agents to run</MaskedLine>
             <MaskedLine>
-              your{" "}
+              <span className="hero-your">your </span>
               <span
+                className="hero-word"
                 style={{
                   position: "relative",
                   display: "inline-block",
@@ -260,6 +261,17 @@ export default function Hero() {
       <style>{`
         @media (max-width: 880px) {
           .hero-grid { grid-template-columns: 1fr !important; }
+          /* Put the rotating word on its own dedicated line so swapping
+             between short ("BRAND.") and long ("MARKETING.") words never
+             changes the hero's line count — kills the up/down page jump. */
+          .hero-your { display: block; }
+          .hero-word { min-height: 0.95em; }
+        }
+        /* Smallest phones: shrink the headline a touch so even the longest
+           word stays on a single line and can't wrap (which would re-introduce
+           the shift). */
+        @media (max-width: 360px) {
+          .hero-grid h1 { font-size: 48px !important; }
         }
       `}</style>
     </section>
