@@ -167,7 +167,7 @@ export default function Footer() {
       >
         <span>© {new Date().getFullYear()} NEUROSPARK MARKETING</span>
         <span>BUILT BY HUMANS — RUN BY AGENTS</span>
-        <span>v4.2.1</span>
+        <span>44.98°N 93.27°W — MINNEAPOLIS — EST. 2025</span>
       </div>
       <style>{`
         .footer-link:hover { color: var(--ns-violet) !important; }

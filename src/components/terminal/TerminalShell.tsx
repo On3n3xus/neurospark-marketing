@@ -1,16 +1,14 @@
 import type { ReactNode } from "react";
 import Chrome from "./Chrome";
-import TopBar from "./TopBar";
+import SiteHeader from "@/components/experience/SiteHeader";
 import CommandBar from "./CommandBar";
-import SubNav from "./SubNav";
 import Footer from "./Footer";
 
 export default function TerminalShell({ children }: { children: ReactNode }) {
   return (
     <Chrome>
-      <TopBar />
+      <SiteHeader />
       <CommandBar />
-      <SubNav />
       <main
         style={{
           padding: "0 24px",

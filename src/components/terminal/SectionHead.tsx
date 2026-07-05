@@ -25,20 +25,24 @@ export default function SectionHead({
           style={{
             fontFamily: MONO,
             fontSize: 11,
-            color: "var(--ns-violet)",
+            color: "var(--ns-text-faint)",
             letterSpacing: "0.2em",
           }}
         >
-          {label}
+          {"////// "}
+          <span style={{ color: "var(--ns-violet)" }}>
+            {label.replace(/^\/+\s*/, "").toUpperCase()}
+          </span>
         </div>
         <h2
           style={{
             fontFamily: DISPLAY,
-            fontWeight: 300,
-            fontSize: "clamp(36px, 4.4vw, 56px)",
-            lineHeight: 1.05,
-            letterSpacing: "-0.03em",
-            margin: "12px 0 0",
+            fontWeight: 500,
+            fontSize: "clamp(24px, 3.2vw, 40px)",
+            lineHeight: 1.2,
+            letterSpacing: "0.08em",
+            textTransform: "uppercase",
+            margin: "14px 0 0",
             color: "var(--ns-text)",
           }}
         >
