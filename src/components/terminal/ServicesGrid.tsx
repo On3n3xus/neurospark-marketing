@@ -72,6 +72,7 @@ export default function ServicesGrid({ limit }: { limit?: number }) {
                 alt={s.name}
                 width={672}
                 height={384}
+                priority={i < 3}
                 style={{
                   width: "100%",
                   height: "auto",
